@@ -17,18 +17,18 @@ import {TopbarComponent} from "../components/topbar.component";
     selector: "application",
     directives: [StoreLogMonitorComponent, SidebarComponent, TopbarComponent, ContentComponent],
     template: `        
-        <sidebar [class.sidebar-collapsed]="sidebarCollapsed"
-                 [isCollapsed]="sidebarCollapsed"
-                 [starredTweets]="starredTweets"
+        <sidebar [class.sidebar-collapsed]="sidebarCollapsed$|async"
+                 [isCollapsed]="sidebarCollapsed$|async"
+                 [starredTweets]="starredTweets$|async"
                  (toggleCollapse)="onToggleCollapseSidebar()">
         </sidebar>
         <main>
-            <topbar [class.topbar-collapsed]="topbarCollapsed"
-                    [isCollapsed]="topbarCollapsed"   
+            <topbar [class.topbar-collapsed]="topbarCollapsed$|async"
+                    [isCollapsed]="topbarCollapsed$|async"   
                     (addTweet)="onAddTweet($event)"
                     (toggleCollapse)="onToggleCollapseTopbar()">
             </topbar>
-            <content [tweets]="tweets"
+            <content [tweets]="tweets$|async"
                      (removeTweet)="onRemoveTweet($event)"
                      (toggleStarTweet)="onStarTweet($event)">
             </content>
@@ -36,21 +36,13 @@ import {TopbarComponent} from "../components/topbar.component";
         <ngrx-store-log-monitor toggleCommand="ctrl-t" positionCommand="ctrl-m"></ngrx-store-log-monitor>
             `
 })
-export class ApplicationContainer implements OnDestroy {
-    sidebarCollapsed = false;
-    topbarCollapsed = false;
-    starredTweets: Array<Tweet> = [];
-    tweets: Array<Tweet> = [];
-
-    private storeSubscription: Subscription;
+export class ApplicationContainer {
+    sidebarCollapsed$ = this.store.select(state => state.sidebarCollapsed);
+    topbarCollapsed$ = this.store.select(state => state.topbarCollapsed);
+    tweets$ = this.store.select(state => state.tweets);
+    starredTweets$ = this.tweets$.map(tweets => tweets.filter(tweet => tweet.starred));
 
     constructor(private store: Store<ApplicationState>) {
-        this.storeSubscription = this.store.subscribe((state: ApplicationState) => {
-            this.sidebarCollapsed = state.sidebarCollapsed;
-            this.topbarCollapsed = state.topbarCollapsed;
-            this.tweets = state.tweets;
-            this.starredTweets = state.tweets.filter(tweet => tweet.starred);
-        });
         let tweets: Array<Tweet> = [];
         for (let i = 0; i < 10; i++) {
             tweets.push(new Tweet(Number(_.uniqueId()), "@brechtbilliet", `Just a dummy tweet ${i}`, false));
@@ -77,9 +69,5 @@ export class ApplicationContainer implements OnDestroy {
 
     onToggleCollapseSidebar(): void {
         this.store.dispatch({type: TOGGLE_SIDEBAR});
-    }
-
-    ngOnDestroy(): void {
-        this.storeSubscription.unsubscribe();
     }
 }
