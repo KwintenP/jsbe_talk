@@ -82,11 +82,11 @@ describe("reducer: sidebarReducer", () => {
 
     describe("on ADD_TWEET", () => {
         it("should add a tweet to the current list of tweets", () => {
-            let tweet:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", true);
+            let tweet:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", true, false, 0, 0);
             let initialState:Array<Tweet> = [tweet];
             deepfreeze(initialState);
 
-            let tweetToAdd:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
+            let tweetToAdd:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true, false, 0, 0);
 
             let payload:any = {tweet: tweetToAdd}
 
@@ -103,8 +103,8 @@ describe("reducer: sidebarReducer", () => {
 
     describe("on REMOVE_TWEET", () => {
         it("should remove the tweet by id from the list of tweets", () => {
-            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", true);
-            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
+            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", true, false, 0, 0);
+            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true, false, 0, 0);
             let initialState:Array<Tweet> = [tweet1, tweet2];
             deepfreeze(initialState);
 
@@ -124,8 +124,8 @@ describe("reducer: sidebarReducer", () => {
 
     describe("TOGGLE_STAR_TWEET", () => {
         it("should star the tweet that was passed in the payload if it was true", () => {
-            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false);
-            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
+            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false, false, 0, 0);
+            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true, false, 0, 0);
             let initialState:Array<Tweet> = [tweet1, tweet2];
             deepfreeze(initialState);
 
@@ -139,15 +139,15 @@ describe("reducer: sidebarReducer", () => {
         });
 
         it("should unstar the tweet that was passed in the payload if it was true", () => {
-            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false);
-            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
+            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false, false, 0, 0);
+            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true, false, 0, 0);
         });
     });
     
     describe("SET_TWEETS", () => {
         it("should set all the tweets and remove other tweets as well", () => {
-            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false);
-            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
+            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false, false, 0, 0);
+            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true, false, 0, 0);
             let initialState:Array<Tweet> = [];
 
             let tweets: Array<Tweet> = [tweet1, tweet2];
@@ -177,8 +177,8 @@ describe("reducer: sidebarReducer", () => {
 
     describe("on case UNKNOWN", () => {
         it("should return the ", () => {
-            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false);
-            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
+            let tweet1:Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", false, false, 0, 0);
+            let tweet2:Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true, false, 0, 0);
             let initialState:Array<Tweet> = [tweet1, tweet2];
 
             let changedState: Array<Tweet> = tweetsReducer(initialState, {type: "UNKNOWN_STATE"});

@@ -70,6 +70,12 @@ content{
 .starred{
   color: yellow;
 }
+.liked{
+  color: red;
+}
+.retweeted {
+  color: green;
+}
 nf-star{
   cursor:pointer;
   font-size: 30px;

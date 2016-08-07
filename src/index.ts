@@ -1,32 +1,31 @@
+import {provideStore} from "@ngrx/store";
+import {rootReducer} from "./reducers/reducers";
+import {bootstrap} from "@angular/platform-browser-dynamic";
+import {instrumentStore} from "@ngrx/store-devtools";
+import {useLogMonitor} from "@ngrx/store-log-monitor";
+import {ApplicationContainer} from "./containers/application.container";
+
+bootstrap(ApplicationContainer, [
+    provideStore(rootReducer),
+    instrumentStore({
+        monitor: useLogMonitor({
+            visible: false,
+            position: "right"
+        })
+    }),
+]);
 /*
- import { provideStore} from "@ngrx/store";
- import {rootReducer} from "./reducers/reducers";
- import {bootstrap} from "@angular/platform-browser-dynamic";
- import {instrumentStore} from "@ngrx/store-devtools";
- import { useLogMonitor } from "@ngrx/store-log-monitor";
- import {ApplicationContainer} from "./containers/application.container";
-
- bootstrap(ApplicationContainer, [
- provideStore(rootReducer),
- instrumentStore({
- monitor: useLogMonitor({
- visible: false,
- position: "right"
- })
- }),
- ]);*/
-
 import {provideStore, Store, Dispatcher, Reducer, combineReducers, State} from "@ngrx/store";
 import {rootReducer} from "./reducers/reducers";
 import {storeLogger} from "ngrx-store-logger/dist/index";
 import {compose} from "@ngrx/core/compose";
-import {TOGGLE_TOPBAR, ADD_TWEET} from "./actions";
+import {TOGGLE_TOPBAR, ADD_TWEET, addTweet} from "./actions";
 import {Tweet} from "./entities/tweet.entity";
 provideStore(rootReducer);
 
 // Redux setup (can vary based on redux architecture implementation)
 let dispatcher:Dispatcher = new Dispatcher();
-let reducers: any = compose(
+let reducers:any = compose(
     storeLogger(),
     combineReducers
 )(rootReducer);
@@ -46,3 +45,6 @@ store.dispatch(
         }
     }
 );
+
+store.dispatch(addTweet(new Tweet(1, "@JSBE", "I'm hosting a meetup at Teamleader", true)));
+*/
