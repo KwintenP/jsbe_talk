@@ -20,7 +20,7 @@ import {provideStore, Store, Dispatcher, Reducer, combineReducers, State} from "
 import {rootReducer} from "./reducers/reducers";
 import {storeLogger} from "ngrx-store-logger/dist/index";
 import {compose} from "@ngrx/core/compose";
-import {TOGGLE_TOPBAR, ADD_TWEET} from "./actions";
+import {TOGGLE_TOPBAR, ADD_TWEET, TOGGLE_SIDEBAR} from "./actions";
 import {Tweet} from "./entities/tweet.entity";
 provideStore(rootReducer);
 
@@ -33,10 +33,16 @@ let reducers: any = compose(
 let reducer:Reducer = new Reducer(dispatcher, reducers);
 let store:Store = new Store(dispatcher, new Reducer(dispatcher, reducers), new State({}, dispatcher, reducer), {});
 
+debugger;
+
 // Dispatch the first action to the store
 store.dispatch({type: TOGGLE_TOPBAR});
 
+debugger;
+
 store.dispatch({type: TOGGLE_TOPBAR});
+
+debugger;
 
 store.dispatch(
     {
@@ -46,3 +52,7 @@ store.dispatch(
         }
     }
 );
+
+debugger;
+
+store.dispatch({type: TOGGLE_SIDEBAR});
