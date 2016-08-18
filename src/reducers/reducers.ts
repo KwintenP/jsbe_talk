@@ -16,9 +16,30 @@ import {
 import {Object} from "es6-shim";
 
 export const rootReducer = {
-    sidebarCollapsed: sidebarReducer,
+    ui: uiReducer,
+    data: dataReducer
+}
+
+/*
+sidebarCollapsed: sidebarReducer,
     topbarCollapsed: topbarReducer,
-    tweets: tweetsReducer
+    tweets: tweetsReducer*/
+
+export function uiReducer(state: UiState, action: Action): UiState {
+    switch(action.type) {
+        case TOGGLE_SIDEBAR:
+            return Object.assign({}, state, {mainPage: topbarReducer()})
+    }
+}
+
+export function mainPageReducer(state: MainPageState, action: Action): MainPageState {
+    switch(action.type) {
+        case
+    }
+}
+
+export function dataReducer(data: DataState, action: Action): DataState {
+
 }
 
 export function sidebarReducer(state: boolean = false, action: Action): boolean {
@@ -91,12 +112,18 @@ export function tweetReducer(state: Tweet, action: Action) {
 }
 
 
+export interface UiState {
+    mainPage: MainPageState;
+}
 
+export interface MainPageState {
+    sidebarCollapsed: boolean;
+    topbarCollapsed: boolean;
+}
 
-
-
-
-
+export interface DataState {
+    tweets: Array<Tweet>;
+}
 
 
 
