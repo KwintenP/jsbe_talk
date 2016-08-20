@@ -18,24 +18,27 @@
 
 import {provideStore, Store, Dispatcher, Reducer, combineReducers, State} from "@ngrx/store";
 import {rootReducer} from "./reducers/reducers";
-import {storeLogger} from "ngrx-store-logger/dist/index";
-import {compose} from "@ngrx/core/compose";
 import {TOGGLE_TOPBAR, ADD_TWEET, TOGGLE_SIDEBAR} from "./actions";
 import {Tweet} from "./entities/tweet.entity";
+import {ApplicationState} from "./applicationState";
 provideStore(rootReducer);
-
-// Redux setup (can vary based on redux architecture implementation)
 let dispatcher: Dispatcher = new Dispatcher();
-let reducers: any = compose(
-    storeLogger(),
-    combineReducers
-)(rootReducer);
+let reducers: any = combineReducers(rootReducer);
 let reducer: Reducer = new Reducer(dispatcher, reducers);
-let store: Store = new Store(dispatcher, new Reducer(dispatcher, reducers), new State({}, dispatcher, reducer), {});
+let store: Store<{}> = new Store<ApplicationState>(dispatcher,
+    new Reducer(dispatcher, reducers),
+    new State<ApplicationState>(undefined, dispatcher, reducer),
+    undefined
+);
+
+store.subscribe((state: ApplicationState) => {
+    console.log("tweets ", state.tweets);
+    console.log("topbarCollapsed", state.topbarCollapsed);
+    console.log("sidebarCollapsed", state.sidebarCollapsed);
+});
 
 debugger;
 
-// Dispatch the first action to the store
 store.dispatch({type: TOGGLE_TOPBAR});
 
 debugger;

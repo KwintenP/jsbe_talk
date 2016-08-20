@@ -7,11 +7,7 @@ let deepfreeze = require("deep-freeze");
 describe("reducer: sidebarReducer", () => {
     describe("on case TOOGLE_SIDEBAR", () => {
         it("should update the state to true if the initial was false", () => {
-            let initialState: boolean = false;
-
-            let changedState: boolean = sidebarReducer(initialState, {type: TOGGLE_SIDEBAR});
-
-            expect(changedState).toBeTruthy();
+            // TOOD: implement
         });
 
         it("should update the state to false if the initial was true", () => {
@@ -84,22 +80,18 @@ describe("reducer: topbarReducer", () => {
 describe("reducer: tweetsReducer", () => {
     describe("on ADD_TWEET", () => {
         it("should add a tweet to the current list of tweets", () => {
+            // TODO: explain
             let tweet: Tweet = new Tweet(1, "@KwintenP", "Giving a talk at JSBE", true);
             let initialState: Array<Tweet> = [tweet];
-            deepfreeze(initialState);
+            // TODO: add deepFreeze
 
             let tweetToAdd: Tweet = new Tweet(3, "@JS_BE", "Giving a meetup, yeaj", true);
 
-            let payload: any = {tweet: tweetToAdd}
-
-            let changedState: Array<Tweet> = tweetsReducer(initialState,
-                {
-                    type: ADD_TWEET,
-                    payload
-                });
+            //TODO: implement
+            let changedState: Array<Tweet>;
 
             expect(changedState.length).toBe(2);
-            expect(changedState[1]).toBe(payload.tweet)
+            expect(changedState[1]).toBe(tweetToAdd);
         });
     });
 
