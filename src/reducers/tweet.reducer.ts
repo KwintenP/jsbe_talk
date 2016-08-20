@@ -4,6 +4,7 @@ import {
     ADD_TWEET, REMOVE_TWEET, SET_TWEETS, UPDATE_TWEET
 } from "./tweet.actions";
 import {Action} from "@ngrx/store";
+import {Object} from "es6-shim";
 
 export function tweetsReducer(state: Array<Tweet> = [], action: Action): Array<Tweet> {
     let id: number, tweet: Tweet, tweets: Array<Tweet>;
@@ -13,22 +14,22 @@ export function tweetsReducer(state: Array<Tweet> = [], action: Action): Array<T
             return [...state, tweet];
         case REMOVE_TWEET:
             ({id} = action.payload);
-            return state.filter(tweet => tweet.id !== id)
+            return state.filter(filterTweet => filterTweet.id !== id)
         case SET_TWEETS:
             ({tweets} = action.payload);
             return [...tweets];
         case UPDATE_TWEET:
             ({id, tweet} = action.payload);
-            return state.map(tweet => tweet.id == id ? tweet : tweet);
+            return state.map(filterTweet => filterTweet.id === id ? tweet : tweet);
         case TWEET_UN_LIKED:
         case TWEET_LIKED:
         case TWEET_UN_RETWEETED:
         case TWEET_RETWEETED:
         case TOGGLE_STAR_TWEET:
             ({id} = action.payload);
-            return state.map(tweet => tweet.id == id ? tweetReducer(tweet, {
+            return state.map(filterTweet => filterTweet.id === id ? tweetReducer(filterTweet, {
                 type: action.type,
-                payload: {tweet}
+                payload: {tweet: filterTweet}
             }) : tweet);
         default:
             return state;
@@ -53,6 +54,7 @@ export function tweetReducer(state: Tweet = undefined, action: Action) {
         case TWEET_UN_LIKED:
             ({tweet} = action.payload);
             return Object.assign({}, tweet, {retweeted: tweet.likes--, hasLiked: false});
-
+        default:
+            return state;
     }
 }

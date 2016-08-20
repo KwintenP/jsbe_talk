@@ -21,7 +21,7 @@ describe("reducer: tweetsReducer", () => {
                 });
 
             expect(changedState.length).toBe(2);
-            expect(changedState[1]).toBe(payload.tweet)
+            expect(changedState[1]).toBe(payload.tweet);
         });
     });
 
