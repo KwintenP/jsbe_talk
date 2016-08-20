@@ -8,7 +8,7 @@ export const rootReducer = {
     tweets: tweetsReducer
 }
 
-export function sidebarReducer(state:boolean = false, action:Action):boolean {
+export function sidebarReducer(state: boolean = false, action: Action): boolean {
     switch (action.type) {
         case TOGGLE_SIDEBAR:
             return !state;
@@ -16,7 +16,7 @@ export function sidebarReducer(state:boolean = false, action:Action):boolean {
             return state;
     }
 }
-export function topbarReducer(state:boolean = false, action:Action):boolean {
+export function topbarReducer(state: boolean = false, action: Action): boolean {
     switch (action.type) {
         case TOGGLE_TOPBAR:
             return !state;
@@ -25,22 +25,22 @@ export function topbarReducer(state:boolean = false, action:Action):boolean {
     }
 }
 
-export function tweetsReducer(state:Array<Tweet> = [], action:Action):Array<Tweet> {
-    let id:number, tweet:Tweet, tweets: Array<Tweet>;
+export function tweetsReducer(state: Array<Tweet> = [], action: Action): Array<Tweet> {
+    let id: number, tweet: Tweet, tweets: Array<Tweet>;
     switch (action.type) {
         case ADD_TWEET:
             ({tweet} = action.payload);
             return [...state, tweet];
         case REMOVE_TWEET:
             ({id} = action.payload);
-            return state.filter(tweet => tweet.id !== id)
+            return state.filter(filterTweet => filterTweet.id !== id)
         case TOGGLE_STAR_TWEET:
             ({id} = action.payload);
             return state.map(
-                tweet =>
-                    tweet.id === id ?
-                        Object.assign({}, tweet, {starred: true}):
-                        tweet
+                mapTweet =>
+                    mapTweet.id === id ?
+                        Object.assign({}, mapTweet, {starred: !mapTweet.starred}) :
+                        mapTweet
             );
         case SET_TWEETS:
             ({tweets} = action.payload);

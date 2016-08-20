@@ -25,13 +25,13 @@ import {Tweet} from "./entities/tweet.entity";
 provideStore(rootReducer);
 
 // Redux setup (can vary based on redux architecture implementation)
-let dispatcher:Dispatcher = new Dispatcher();
+let dispatcher: Dispatcher = new Dispatcher();
 let reducers: any = compose(
     storeLogger(),
     combineReducers
 )(rootReducer);
-let reducer:Reducer = new Reducer(dispatcher, reducers);
-let store:Store = new Store(dispatcher, new Reducer(dispatcher, reducers), new State({}, dispatcher, reducer), {});
+let reducer: Reducer = new Reducer(dispatcher, reducers);
+let store: Store = new Store(dispatcher, new Reducer(dispatcher, reducers), new State({}, dispatcher, reducer), {});
 
 debugger;
 
