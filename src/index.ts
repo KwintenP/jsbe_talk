@@ -1,5 +1,5 @@
 import {provideStore} from "@ngrx/store";
-import {rootReducer} from "./reducers/reducers";
+import {rootReducer} from "./reducers/root.reducer";
 import {bootstrap} from "@angular/platform-browser-dynamic";
 import {instrumentStore} from "@ngrx/store-devtools";
 import {useLogMonitor} from "@ngrx/store-log-monitor";
@@ -14,6 +14,7 @@ bootstrap(ApplicationContainer, [
         })
     }),
 ]);
+
 /*
 import {provideStore, Store, Dispatcher, Reducer, combineReducers, State} from "@ngrx/store";
 import {rootReducer} from "./reducers/reducers";

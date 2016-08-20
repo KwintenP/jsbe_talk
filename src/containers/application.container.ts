@@ -2,10 +2,6 @@ import {Component, OnDestroy} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {StoreLogMonitorComponent} from "@ngrx/store-log-monitor";
 import {ApplicationState} from "../applicationState";
-import {
-    SET_TWEETS, ADD_TWEET, REMOVE_TWEET, TOGGLE_STAR_TWEET, TOGGLE_TOPBAR, TOGGLE_SIDEBAR,
-    tweetLiked, tweetUnLiked, tweetUnRetweeted, tweetRetweeted
-} from "../actions";
 import {Tweet} from "../entities/tweet.entity";
 import {SidebarComponent} from "../components/sidebar.component";
 import {Subscription} from "rxjs/Rx";
@@ -15,6 +11,12 @@ import "font-awesome/css/font-awesome.css";
 import "./application.container.scss";
 import {ContentComponent} from "../components/content.component";
 import {TopbarComponent} from "../components/topbar.component";
+import {
+    ADD_TWEET, SET_TWEETS, REMOVE_TWEET, TOGGLE_STAR_TWEET, tweetUnLiked,
+    tweetUnRetweeted, tweetLiked, addTweet, setTweets, removeTweet, toggleStarTweet, tweetRetweeted
+} from "../reducers/tweet.actions";
+import {TOGGLE_TOPBAR} from "../reducers/topbar.actions";
+import {TOGGLE_SIDEBAR, toggleSideBar} from "../reducers/sidebar.actions";
 
 @Component({
     selector: "application",
@@ -53,37 +55,37 @@ export class ApplicationContainer implements OnDestroy {
 
     constructor(private store: Store<ApplicationState>) {
         this.storeSubscription = this.store.subscribe((state: ApplicationState) => {
-            this.sidebarCollapsed = state.sidebarCollapsed;
-            this.topbarCollapsed = state.topbarCollapsed;
-            this.tweets = state.tweets;
-            this.starredTweets = state.tweets.filter(tweet => tweet.starred);
+            this.sidebarCollapsed = state.ui.mainPage.sidebarCollapsed;
+            this.topbarCollapsed = state.ui.mainPage.topbarCollapsed;
+            this.tweets = state.data.tweets;
+            this.starredTweets = state.data.tweets.filter(tweet => tweet.starred);
         });
         let tweets: Array<Tweet> = [];
         for (let i = 0; i < 10; i++) {
-            tweets.push(new Tweet(Number(_.uniqueId()), "@brechtbilliet", `Just a dummy tweet ${i}`, false, false, 0, 0));
+            tweets.push(new Tweet(Number(_.uniqueId()), "@KwintenP", `Just a dummy tweet ${i}`, false, false, 0, 0));
         }
-        this.store.dispatch({type: SET_TWEETS, payload: {tweets}});
+        this.store.dispatch(setTweets(tweets));
     }
 
     onAddTweet(content: string): void {
-        let tweet = new Tweet(Number(_.uniqueId()), "@brechtbilliet", content, false, false, 0, 0);
-        this.store.dispatch({type: ADD_TWEET, payload: {tweet}});
+        let tweet = new Tweet(Number(_.uniqueId()), "@KwintenP", content, false, false, 0, 0);
+        this.store.dispatch(addTweet(tweet));
     }
 
     onRemoveTweet(id: number): void {
-        this.store.dispatch({type: REMOVE_TWEET, payload: {id}});
+        this.store.dispatch(removeTweet(id));
     }
 
     onStarTweet(id: number): void {
-        this.store.dispatch({type: TOGGLE_STAR_TWEET, payload: {id}});
+        this.store.dispatch(toggleStarTweet(id));
     }
 
     onToggleCollapseTopbar(): void {
-        this.store.dispatch({type: TOGGLE_TOPBAR});
+        this.store.dispatch(toggleSideBar());
     }
 
     onToggleCollapseSidebar(): void {
-        this.store.dispatch({type: TOGGLE_SIDEBAR});
+        this.store.dispatch(toggleSideBar());
     }
 
     onTweetLiked(id: number): void {
