@@ -34,7 +34,7 @@ import {RetweetsComponent} from "./retweet.component";
 `
 })
 export class ContentComponent {
-    @Input() tweets:Array<Tweet>;
+    @Input() tweets: Array<Tweet>;
     @Output() toggleStarTweet = new EventEmitter<number>();
     @Output() removeTweet = new EventEmitter<number>();
     @Output() tweetLiked = new EventEmitter<number>();
@@ -42,16 +42,16 @@ export class ContentComponent {
     @Output() tweetRetweeted = new EventEmitter<number>();
     @Output() tweetUnRetweeted = new EventEmitter<number>();
 
-    onToggleStar(tweet:Tweet):void {
+    onToggleStar(tweet: Tweet): void {
         this.toggleStarTweet.emit(tweet.id);
     }
 
-    onRemoveTweet(tweet:Tweet):void {
+    onRemoveTweet(tweet: Tweet): void {
         this.removeTweet.emit(tweet.id);
     }
 
     onLiked(tweet: Tweet): void {
-        if(tweet.hasLiked) {
+        if (tweet.hasLiked) {
             this.tweetUnLiked.emit(tweet.id);
         } else {
             this.tweetLiked.emit(tweet.id);
@@ -60,7 +60,7 @@ export class ContentComponent {
 
     onRetweeted(tweet: Tweet): void {
         console.log("entered");
-        if(tweet.hasRetweeted) {
+        if (tweet.hasRetweeted) {
             this.tweetUnRetweeted.emit(tweet.id);
         } else {
             this.tweetRetweeted.emit(tweet.id);

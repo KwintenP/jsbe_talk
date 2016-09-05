@@ -108,7 +108,6 @@ describe("reducer: tweetsReducer", () => {
             let changedState: Array<Tweet> = tweetsReducer(initialState, {type: "UNKNOWN_STATE"});
 
             _.each(changedState, (tweet: Tweet, index: number) => {
-                console.log("test");
                 expect(tweet).toBe(initialState[index]);
             });
         });

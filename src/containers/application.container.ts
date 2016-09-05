@@ -12,11 +12,16 @@ import "./application.container.scss";
 import {ContentComponent} from "../components/content.component";
 import {TopbarComponent} from "../components/topbar.component";
 import {
-    ADD_TWEET, SET_TWEETS, REMOVE_TWEET, TOGGLE_STAR_TWEET, tweetUnLiked,
-    tweetUnRetweeted, tweetLiked, addTweet, setTweets, removeTweet, toggleStarTweet, tweetRetweeted
+    tweetUnLiked,
+    tweetUnRetweeted,
+    tweetLiked,
+    addTweet,
+    setTweets,
+    removeTweet,
+    toggleStarTweet,
+    tweetRetweeted
 } from "../reducers/tweet.actions";
-import {TOGGLE_TOPBAR} from "../reducers/topbar.actions";
-import {TOGGLE_SIDEBAR, toggleSideBar} from "../reducers/sidebar.actions";
+import {toggleSideBar} from "../reducers/sidebar.actions";
 
 @Component({
     selector: "application",

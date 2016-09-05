@@ -30,7 +30,7 @@ export function tweetsReducer(state: Array<Tweet> = [], action: Action): Array<T
             return state.map(filterTweet => filterTweet.id === id ? tweetReducer(filterTweet, {
                 type: action.type,
                 payload: {tweet: filterTweet}
-            }) : tweet);
+            }) : filterTweet);
         default:
             return state;
     }
