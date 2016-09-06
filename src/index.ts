@@ -30,6 +30,7 @@ let store: Store<{}> = new Store<ApplicationState>(dispatcher,
     new State<ApplicationState>(undefined, dispatcher, reducer),
     undefined
 );
+store.dispatch({type: Dispatcher.INIT});
 
 store.subscribe((state: ApplicationState) => {
     console.log("tweets ", state.tweets);
