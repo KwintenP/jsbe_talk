@@ -8,6 +8,18 @@ export const rootReducer = {
     tweets: tweetsReducer
 }
 
+// {
+//     sideBarCollapsed: true,
+//     topbarCollapsed: false,
+//     tweets: []
+// }
+//
+//
+// store.dispatch(someAction);
+// sideBarReducer(state.sideBarCollapsed, action)
+// topbarReducer(state.topbarCollapsed, action)
+// tweetsReducer(state.tweets, action)
+
 export function sidebarReducer(state: boolean = false, action: Action): boolean {
     // TODO: implement
 }
