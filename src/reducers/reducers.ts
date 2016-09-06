@@ -11,7 +11,7 @@ export const rootReducer = {
 // {
 //     sideBarCollapsed: true,
 //     topbarCollapsed: false,
-//     tweets: []
+//     tweets: Array<Tweet>
 // }
 //
 //
